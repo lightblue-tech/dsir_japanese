@@ -1,3 +1,20 @@
+# ！！！JAPANESE EDIT 日本語のための編集！！！
+
+In order to use the Japanese tokenizer in this package, you need to also install Mecab on your machine, which for Linux would be:
+
+```bash
+apt -y install mecab libmecab-dev mecab-utils mecab-jumandic-utf8 mecab-naist-jdic python3-mecab
+```
+
+Then, you need to install a tokenizer and dict, like so:
+
+```bash
+pip install unidic-lite
+pip install mecab-python3
+```
+
+Then you should be able to use this repo just like the original DSIR library.
+
 # Data Selection for Language Models via Importance Resampling (DSIR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![arXiv](https://img.shields.io/badge/arXiv-2305.10429-00ff00.svg)](https://arxiv.org/abs/2302.03169)
