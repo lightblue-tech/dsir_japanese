@@ -17,7 +17,23 @@ from data_selection.utils import parallelize
 import MeCab
 
 wpt = WordPunctTokenizer()
-wakati = MeCab.Tagger("-Owakati")
+# This class is required to pickle the tokenizer
+class MeCabTagger:
+    def __init__(self, *args, **kwargs):
+        self.args = args
+        self.kwargs = kwargs
+        self.tagger = MeCab.Tagger(*self.args, **self.kwargs)
+
+    def __getattr__(self, name):
+        return getattr(self.tagger, name)
+
+    def __getstate__(self):
+        return {'args': self.args, 'kwargs': self.kwargs}
+
+    def __setstate__(self, state):
+        self.__init__(*state['args'], **state['kwargs'])
+
+wakati = MeCabTagger("-Owakati")
 
 def hash_buckets(text: str, num_buckets: int = 10000) -> int:
     return int(hashlib.sha256(text.encode('utf-8')).hexdigest(), 16) % num_buckets
