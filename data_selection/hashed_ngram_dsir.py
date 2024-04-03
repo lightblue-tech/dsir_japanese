@@ -118,7 +118,7 @@ class HashedNgramDSIR(DSIR):
         elif tokenizer == 'wordpunct':
             self.tokenizer = wpt.tokenize
         elif tokenizer == 'japanese':
-            self.tokenizer = lambda x: wakati.parse(x).split()
+            self.tokenizer = lambda x: wakati.tagger.parse(x).split()
         else:
             raise ValueError('tokenizer not recognized')
         self.ngrams = ngrams
