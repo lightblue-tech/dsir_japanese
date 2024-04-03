@@ -14,14 +14,13 @@ from data_selection.base import (
 )
 
 from data_selection.utils import parallelize
-
+import MeCab
 
 wpt = WordPunctTokenizer()
-
+wakati = MeCab.Tagger("-Owakati")
 
 def hash_buckets(text: str, num_buckets: int = 10000) -> int:
     return int(hashlib.sha256(text.encode('utf-8')).hexdigest(), 16) % num_buckets
-
 
 def get_ngram_counts(line: str,
                      n: int = 2,
@@ -50,7 +49,6 @@ def get_ngram_counts(line: str,
             counts[hash_buckets(ng, num_buckets=num_buckets)] += 1
     return counts
 
-
 class HashedNgramDSIR(DSIR):
     """DSIR with hashed n-gram features."""
 
@@ -65,7 +63,7 @@ class HashedNgramDSIR(DSIR):
                  num_proc: Optional[int] = None,
                  ngrams: int = 2,
                  num_buckets: int = 10000,
-                 tokenizer: str = 'wordpunct',
+                 tokenizer: str = 'japanese',
                  min_example_length: int = 100,
                  target_laplace_smoothing: float = 0.0,
                  separate_targets: bool = False,
@@ -103,6 +101,8 @@ class HashedNgramDSIR(DSIR):
             self.tokenizer = word_tokenize
         elif tokenizer == 'wordpunct':
             self.tokenizer = wpt.tokenize
+        elif tokenizer == 'japanese':
+            self.tokenizer = lambda x: wakati.parse(x).split()
         else:
             raise ValueError('tokenizer not recognized')
         self.ngrams = ngrams
