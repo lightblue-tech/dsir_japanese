@@ -13,7 +13,11 @@ pip install unidic-lite
 pip install mecab-python3
 ```
 
-Then you should be able to use this repo just like the original DSIR library.
+Then you should be able to use this repo just like the original DSIR library like so:
+
+```bash
+pip install git+https://github.com/lightblue-tech/dsir_japanese.git
+```
 
 # Data Selection for Language Models via Importance Resampling (DSIR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
